@@ -1,7 +1,9 @@
 #include<iostream>
 
 using namespace std;
-
+using std::cin;
+using std::cout;
+using std::endl;
 
 
 
@@ -11,15 +13,30 @@ class Element
 	Element* pNext;
 	static int count;
 public:
+
+	int get_Data()const {
+		return this->Data;
+	}
+	void set_Data(int Data) {
+		 this->Data = Data;
+	}
+	Element* get_pNext()const {
+		return pNext;
+	}
+	void set_pNext(Element* pNext) {
+		this->pNext = pNext;
+	}
+
+
 	Element(int Data, Element* pNext = nullptr) :Data(Data), pNext(pNext)
 	{
 		count++;
-		cout << "EConstructor:\t" << this << endl;
+		//cout << "EConstructor:\t" << this << endl;
 	}
 	~Element()
 	{
 		count--;
-		cout << "EDestructor:\t" << this << endl;
+		//cout << "EDestructor:\t" << this << endl;
 	}
 
 	friend class ForwardList;
@@ -28,17 +45,24 @@ int Element::count = 0;
 
 class ForwardList {
 	Element* Head;
-	Element* Tail;
 	unsigned int size;
 public:
+	
+	Element* get_Head()const {
+		return Head;
+	}
+	void set_Head(Element* Head) {
+		this->Head = Head;
+	}
+
 	ForwardList() {
 		Head = nullptr;
-		cout << "LConstructor" << this << endl;
+		//cout << "LConstructor: " << this << endl;
 	}
 	
 	ForwardList(const std::initializer_list<int>&il):ForwardList() {
 
-		cout << typeid(il.begin()).name() << endl;
+		//cout << typeid(il.begin()).name() << endl;
 
 
 		for (int const* it = il.begin(); it != il.end(); it++) {
@@ -48,9 +72,20 @@ public:
 
 	~ForwardList() {
 		while (Head)pop_front();
-		cout << "LDestructor" << this << endl;
+		///cout << "LDestructor: " << this << endl;
 	}
-
+	////////////////////////////////////////////////////////////////////
+	
+	ForwardList& operator=(const ForwardList& other)
+	{
+		//1) Удаляем старое значение объекта:
+		while (Head)pop_front();
+		//2) Выполняем побитовое копирование:
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
+			push_back(Temp->Data);
+		return *this;
+	}
+	////////////////////////////////////////////////////////////////////
 
 	void push_front(int Data) {
 		/*Element* New = new Element(Data);
@@ -63,7 +98,7 @@ public:
 
 	void push_back(int Data)
 	{
-		if (Head == nullptr)return push_front(Data);
+		if (get_Head() == nullptr)return push_front(Data);
 		//Element* New = new Element(Data);
 		Element* Temp = Head;
 		//for (Element* Temp = Head; Temp->pNext != nullptr; Temp = Temp->pNext)Temp->pNext = New;
@@ -118,7 +153,36 @@ public:
 			Temp->pNext = new Element(Data,Temp->pNext);
 			size++;
 		}
-	};
+};
+
+ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
+	ForwardList result; 
+	Element* TempLeft = left.get_Head();
+	Element* TempRight = right.get_Head();
+	Element* Temp = right.get_pNext();
+
+	result.set_Head(TempLeft);
+	//for(TempLeft.get_pNext();)
+	//result.set_pNext()
+	//while (TempLeft != nullptr) { cout << "nullptr " << endl; }
+	//result.
+	//while()
+	
+	////result 
+	//if (left.get_Head() == nullptr)return left.push_front(left.get_Data());
+	////Element* New = new Element(Data);
+	//
+	////for (Element* Temp = Head; Temp->pNext != nullptr; Temp = Temp->pNext)Temp->pNext = New;
+	//while (Temp->get_pNext() != nullptr) {Temp = Temp->get_pNext();// переход на следующий элемент
+	//}
+	////Temp->pNext = New;
+	//Temp->get_pNext() = new Element(Data);
+
+
+
+	return result;
+}
+
 
 //#define BASE_CHECK
 //#define RANGE_BASED_FOR_ARRAY
@@ -168,7 +232,13 @@ public:
 
 
 		ForwardList list = { 3,5,8,13,21 };
-		list.print();
+		ForwardList list2 = { 2,5,9,13 };
+		ForwardList list4 = { 13,75,19,43 };
+		ForwardList list3 = list2 + list4;
+	
+		
+		//list.print();
+		list3.print();
 
 
 
