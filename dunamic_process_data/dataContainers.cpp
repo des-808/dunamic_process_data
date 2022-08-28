@@ -179,16 +179,15 @@ ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 	for (; TempRight != nullptr; TempRight = TempRight->get_pNext()) {
 		result.push_back(TempRight->get_Data());
 	}
+	cout << "Голова " << result.get_Head() << endl;
 	result.print();
-	delete TempLeft;
-	delete TempRight;
 	return result;
 }
 
 
 //#define BASE_CHECK
 //#define RANGE_BASED_FOR_ARRAY
-	int main() {
+	void main() {
 		setlocale(LC_ALL, "Russian");
 #ifdef BASE_CHECK
 		int n;
@@ -234,25 +233,24 @@ ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 
 
 		//ForwardList list = { 3,5,8,13,21 };
-		ForwardList list2 = { 2,5,9,13 };
-		ForwardList list4 = { 13,75,19,43 };
-		//ForwardList list3 = list2 + list4;
-	
-		
-		//list.print();
-		list2.print();
-		list2.erase(2);
-		list2.print();
+		ForwardList list2 = { 2,5,9,13,21,34 };
+		ForwardList list4 = { 13,75,19,43,29,44,36,110 };
+		ForwardList list3;// = list2 + list4;
+		list3 = list2 + list4;
+		cout << "List3 "<< endl;
+		list3.print();
+
+
+		list4.print();
+		list4.erase(2);
+		list4.print();
 		///list3.print();
 
 		/*ForwardList list = { 3, 5, 8, 13, 21 };
-		for (int i : list)
-		{
-			cout << i << "\t";
-		}
+		for (int i : list){cout << i << "\t";}
 		cout << endl;*/
 
-		return 1;
+		//return 1;
 	}
 
 
