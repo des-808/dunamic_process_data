@@ -38,14 +38,54 @@ public:
 		count--;
 		//cout << "EDestructor:\t" << this << endl;
 	}
+	
 
 	friend class ForwardList;
+	friend class Iterator;
 };
 int Element::count = 0;
 
+
+class Iterator {
+	Element* Temp;
+public:
+	Iterator(Element* Temp = nullptr) {
+		this->Temp = Temp;
+		cout << "itConstructor:\t" << this << endl;
+	}
+
+	~Iterator(){
+		cout <<" IDestructor:\t" << this << endl;
+	}
+
+
+	Iterator& operator++() { 
+		Temp = Temp->pNext; 
+		return *this; 
+	}
+	Iterator& operator++(int) {
+		Iterator old = *this;
+		Temp = Temp->pNext;
+		return old;
+	}
+
+	int& operator*() {
+		return Temp->Data;
+	}
+	bool operator!=(const Iterator& other)const {
+		return this->Temp != other.Temp;
+	}
+	bool operator!=(Element* other_el)const {
+		return this->Temp != other_el;
+	}
+	operator bool()const { return Temp; }
+};
+
+
+
 class ForwardList {
-	Element* Head;
-	unsigned int size =0;
+	Element* Head; 
+	unsigned int size;
 public:
 	
 	Element* get_Head()const {
@@ -55,8 +95,16 @@ public:
 		this->Head = Head;
 	}
 
+	Iterator Begin() { return Head; }
+	Iterator End() { return nullptr; }
+
+
 	ForwardList() {
-		Head = nullptr;
+		this->Head = nullptr;
+		//cout << "LConstructor: " << this << endl;
+	}
+	ForwardList(int size):ForwardList() {
+		while (size--) { push_front(0); }
 		//cout << "LConstructor: " << this << endl;
 	}
 	
@@ -126,15 +174,29 @@ public:
 		size++;
 	}
 
-		void print()const {
+		//void print()const {
+
+		//	//Element* Temp = Head;
+		//	//while (Temp) {
+		//	//	cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
+		//	//	Temp = Temp->pNext;// переход на следующий элемент
+		//	//}
+		//	for (Element* Temp = Head; Temp;Temp=Temp->pNext){ 
+		//		cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl; 
+		//	}
+		//	cout << "колличество элементов списка :" << size << endl;
+		//	cout <<" общее колличество элементов : " << Element::count << endl;
+		//}
+		void print() {
 
 			//Element* Temp = Head;
 			//while (Temp) {
 			//	cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl;
 			//	Temp = Temp->pNext;// переход на следующий элемент
 			//}
-			for (Element* Temp = Head; Temp;Temp=Temp->pNext){ 
-				cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl; 
+			for (Iterator* Temp = begin(); Temp!=end(); Temp++) {
+				//cout << Temp << "\t" << Temp->Data << "\t" << Temp->pNext << endl; 
+				cout << *Temp <<  endl; 
 			}
 			cout << "колличество элементов списка :" << size << endl;
 			cout <<" общее колличество элементов : " << Element::count << endl;
@@ -326,4 +388,21 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right) {
  end()  возвращает итератор на конец контейнера
 
  
+
+
+
+
+
+ Двусвязный список
+
+
+
+
+
+
+
+
+
+
+
 */
