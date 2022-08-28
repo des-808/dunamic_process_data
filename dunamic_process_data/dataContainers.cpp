@@ -165,8 +165,6 @@ public:
 			delete  Temp2;
 			size--;
 		}
-
-
 };
 
 ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
@@ -175,13 +173,11 @@ ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 	Element* TempRight = right.get_Head();
 	for (; TempLeft!=nullptr; TempLeft = TempLeft->get_pNext()){
 		 result.push_back(TempLeft->get_Data()); 
-		 //cout << TempLeft <<  endl; 
 	}
 	if (TempLeft == nullptr) { result.push_back(TempRight->get_Data()); TempLeft = right.get_Head(); }
 
 	for (; TempRight != nullptr; TempRight = TempRight->get_pNext()) {
 		result.push_back(TempRight->get_Data());
-		//cout << TempRight <<  endl;
 	}
 	result.print();
 	delete TempLeft;
