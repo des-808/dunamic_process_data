@@ -73,7 +73,11 @@ public:
 		*this = other;
 		//cout << "CopyConstructor" << endl;
 	}
-
+	ForwardList( ForwardList&& other) :ForwardList() {
+		*this = std::move(other);
+		//cout << "MoveConstructor" << endl;
+	}
+	
 	~ForwardList() {
 		while (Head)pop_front();
 		///cout << "LDestructor: " << this << endl;
@@ -90,13 +94,20 @@ public:
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) { push_back(Temp->Data); }
 		return *this;
 	}
+	
+	ForwardList& operator=(ForwardList&& other)
+	{
+		if (this == &other)return *this;
+		while (Head)  pop_front(); 
+		this->Head = other.Head;
+		this->size = other.size;
+		other.Head = nullptr;
+		other.size = 0;
+		return *this;
+	}
 	////////////////////////////////////////////////////////////////////
 
 	void push_front(int Data) {
-		/*Element* New = new Element(Data);
-		New->pNext = Head;
-		Head = New;*/
-
 		Head = new Element(Data,Head);
 		size++;
 	}
@@ -227,8 +238,6 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right) {
 		for (int i : arr) { cout << i << "\t"; }
 #endif // RANGE_BASED_FOR_ARRAY
 
-
-		//ForwardList list = { 3,5,8,13,21 };
 		//ForwardList list2 = { 2,5,9,13,21,34 };
 		//ForwardList list4 = { 13,75,19,43,29,44,36,110 };
 		//ForwardList list3;// = list2 + list4;
