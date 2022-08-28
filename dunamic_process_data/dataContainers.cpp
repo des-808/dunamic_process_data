@@ -173,18 +173,10 @@ public:
 
 ForwardList operator+(const ForwardList& left, const ForwardList& right) {
 	ForwardList result =left; 
-	//Element* TempLeft = left.get_Head();
 	Element* TempRight = right.get_Head();
-	/*for (; TempLeft!=nullptr; TempLeft = TempLeft->get_pNext()){
-		 result.push_back(TempLeft->get_Data()); 
-	}*/
-	//if (TempLeft == nullptr) { result.push_back(TempRight->get_Data()); TempLeft = right.get_Head(); }
-
 	for (; TempRight != nullptr; TempRight = TempRight->get_pNext()) {
 		result.push_back(TempRight->get_Data());
 	}
-	//cout << "Голова " << result.get_Head() << endl;
-	//result.print();
 	return result;
 }
 
@@ -237,20 +229,20 @@ ForwardList operator+(const ForwardList& left, const ForwardList& right) {
 
 
 		//ForwardList list = { 3,5,8,13,21 };
-		ForwardList list2 = { 2,5,9,13,21,34 };
-		ForwardList list4 = { 13,75,19,43,29,44,36,110 };
-		ForwardList list3;// = list2 + list4;
-		list3 = list2 + list4;
-		cout << "List3 "<< endl;
-		list3.print();
+		//ForwardList list2 = { 2,5,9,13,21,34 };
+		//ForwardList list4 = { 13,75,19,43,29,44,36,110 };
+		//ForwardList list3;// = list2 + list4;
+		//list3 = list2 + list4;
+		//cout << "List3 "<< endl;
+		//list3.print();
 
-		list4.print();
-		list4.erase(2);
-		list4.print();
+		//list4.print();
+		//list4.erase(2);
+		//list4.print();
 
-		/*ForwardList list = { 3, 5, 8, 13, 21 };
+		ForwardList list = { 3, 5, 8, 13, 21 };
 		for (int i : list){cout << i << "\t";}
-		cout << endl;*/
+		cout << endl;
 
 		//return 1;
 	}
