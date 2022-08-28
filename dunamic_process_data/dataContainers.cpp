@@ -183,7 +183,9 @@ ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 	result.print();
 	return result;
 }
-
+std::ostream& operator<<(std::ostream& os, const ForwardList& obj) {
+	return os << obj.get_Head();
+}
 
 //#define BASE_CHECK
 //#define RANGE_BASED_FOR_ARRAY
@@ -238,6 +240,7 @@ ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 		ForwardList list3;// = list2 + list4;
 		list3 = list2 + list4;
 		cout << "List3 "<< endl;
+		cout << list2 << endl;
 		list3.print();
 
 
