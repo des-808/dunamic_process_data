@@ -70,19 +70,20 @@ public:
 		}
 	}
 
+
 	~ForwardList() {
 		while (Head)pop_front();
 		///cout << "LDestructor: " << this << endl;
 	}
+
+
+	
 	////////////////////////////////////////////////////////////////////
 	
 	ForwardList& operator=(const ForwardList& other)
 	{
-		//1) Удаляем старое значение объекта:
-		while (Head)pop_front();
-		//2) Выполняем побитовое копирование:
-		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)
-			push_back(Temp->Data);
+		while (Head) { pop_front(); }
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) { push_back(Temp->Data); }
 		return *this;
 	}
 	////////////////////////////////////////////////////////////////////
@@ -153,33 +154,38 @@ public:
 			Temp->pNext = new Element(Data,Temp->pNext);
 			size++;
 		}
+		
+		void erase( int Index) {// удаляет значение по индексу
+			Element* Temp = Head;
+			Element* Temp2;
+			if (Index == 0) { pop_front(); }
+			else for (int i = 0; i < Index-1; i++) {Temp = Temp->pNext; }
+			Temp2 = Temp->pNext;
+			Temp->pNext = Temp->pNext->pNext;
+			delete  Temp2;
+			size--;
+		}
+
+
 };
 
 ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 	ForwardList result; 
 	Element* TempLeft = left.get_Head();
 	Element* TempRight = right.get_Head();
-	Element* Temp = right.get_pNext();
+	for (; TempLeft!=nullptr; TempLeft = TempLeft->get_pNext()){
+		 result.push_back(TempLeft->get_Data()); 
+		 //cout << TempLeft <<  endl; 
+	}
+	if (TempLeft == nullptr) { result.push_back(TempRight->get_Data()); TempLeft = right.get_Head(); }
 
-	result.set_Head(TempLeft);
-	//for(TempLeft.get_pNext();)
-	//result.set_pNext()
-	//while (TempLeft != nullptr) { cout << "nullptr " << endl; }
-	//result.
-	//while()
-	
-	////result 
-	//if (left.get_Head() == nullptr)return left.push_front(left.get_Data());
-	////Element* New = new Element(Data);
-	//
-	////for (Element* Temp = Head; Temp->pNext != nullptr; Temp = Temp->pNext)Temp->pNext = New;
-	//while (Temp->get_pNext() != nullptr) {Temp = Temp->get_pNext();// переход на следующий элемент
-	//}
-	////Temp->pNext = New;
-	//Temp->get_pNext() = new Element(Data);
-
-
-
+	for (; TempRight != nullptr; TempRight = TempRight->get_pNext()) {
+		result.push_back(TempRight->get_Data());
+		//cout << TempRight <<  endl;
+	}
+	result.print();
+	delete TempLeft;
+	delete TempRight;
 	return result;
 }
 
@@ -231,16 +237,24 @@ ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
 #endif // RANGE_BASED_FOR_ARRAY
 
 
-		ForwardList list = { 3,5,8,13,21 };
+		//ForwardList list = { 3,5,8,13,21 };
 		ForwardList list2 = { 2,5,9,13 };
 		ForwardList list4 = { 13,75,19,43 };
-		ForwardList list3 = list2 + list4;
+		//ForwardList list3 = list2 + list4;
 	
 		
 		//list.print();
-		list3.print();
+		list2.print();
+		list2.erase(2);
+		list2.print();
+		///list3.print();
 
-
+		/*ForwardList list = { 3, 5, 8, 13, 21 };
+		for (int i : list)
+		{
+			cout << i << "\t";
+		}
+		cout << endl;*/
 
 		return 1;
 	}
