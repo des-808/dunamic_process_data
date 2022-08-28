@@ -69,7 +69,10 @@ public:
 			push_back(*it);
 		}
 	}
-
+	ForwardList(const ForwardList& other) :ForwardList() {
+		*this = other;
+		//cout << "CopyConstructor" << endl;
+	}
 
 	~ForwardList() {
 		while (Head)pop_front();
@@ -82,6 +85,7 @@ public:
 	
 	ForwardList& operator=(const ForwardList& other)
 	{
+		if (this == &other)return *this;
 		while (Head) { pop_front(); }
 		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) { push_back(Temp->Data); }
 		return *this;
@@ -167,25 +171,23 @@ public:
 		}
 };
 
-ForwardList& operator+(const ForwardList& left, const ForwardList& right) {
-	ForwardList result; 
-	Element* TempLeft = left.get_Head();
+ForwardList operator+(const ForwardList& left, const ForwardList& right) {
+	ForwardList result =left; 
+	//Element* TempLeft = left.get_Head();
 	Element* TempRight = right.get_Head();
-	for (; TempLeft!=nullptr; TempLeft = TempLeft->get_pNext()){
+	/*for (; TempLeft!=nullptr; TempLeft = TempLeft->get_pNext()){
 		 result.push_back(TempLeft->get_Data()); 
-	}
-	if (TempLeft == nullptr) { result.push_back(TempRight->get_Data()); TempLeft = right.get_Head(); }
+	}*/
+	//if (TempLeft == nullptr) { result.push_back(TempRight->get_Data()); TempLeft = right.get_Head(); }
 
 	for (; TempRight != nullptr; TempRight = TempRight->get_pNext()) {
 		result.push_back(TempRight->get_Data());
 	}
-	cout << "Голова " << result.get_Head() << endl;
-	result.print();
+	//cout << "Голова " << result.get_Head() << endl;
+	//result.print();
 	return result;
 }
-std::ostream& operator<<(std::ostream& os, const ForwardList& obj) {
-	return os << obj.get_Head();
-}
+
 
 //#define BASE_CHECK
 //#define RANGE_BASED_FOR_ARRAY
@@ -240,14 +242,11 @@ std::ostream& operator<<(std::ostream& os, const ForwardList& obj) {
 		ForwardList list3;// = list2 + list4;
 		list3 = list2 + list4;
 		cout << "List3 "<< endl;
-		cout << list2 << endl;
 		list3.print();
-
 
 		list4.print();
 		list4.erase(2);
 		list4.print();
-		///list3.print();
 
 		/*ForwardList list = { 3, 5, 8, 13, 21 };
 		for (int i : list){cout << i << "\t";}
